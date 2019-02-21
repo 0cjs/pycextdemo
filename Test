@@ -7,10 +7,12 @@ builddir=$basedir/.build
 die() { local exitcode=$1; shift; echo -e 1>&2 "$@"; exit $exitcode; }
 
 target=''
+quiet=1
 while true; do case "$1" in
     --)     shift; break;;              # Remaining args not for this script.
     -C)     shift; rm -rf "$builddir";;
     -t)     shift; target="--target $1"; shift;;    # BUG: no spaces in target
+    -v)     shift; unset quiet;;
     *)      break;;
 esac; done
 #   We do not currently handle extra args because we've not decided
@@ -21,6 +23,6 @@ mkdir -p "$builddir"
 cd "$builddir"
 {
     cmake .. \
-    && cmake --build . $target \
-    && ctest -Q
+    && cmake --build . $target -- \
+    && ctest ${quiet:+-Q}
 }   || die $? "\nFAILED"
