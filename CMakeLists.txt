@@ -3,3 +3,5 @@ project(pycextdemo)
 
 enable_testing()
 add_test(TestNothing true)
+
+add_subdirectory(hello)
