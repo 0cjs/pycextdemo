@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -e -o pipefail
+
+basedir=$(cd "$(dirname "$0")" && pwd -P)
+builddir=$basedir/.build
+
+die() { local exitcode=$1; shift; echo -e 1>&2 "$@"; exit $exitcode; }
+
+target=''
+while true; do case "$1" in
+    --)     shift; break;;              # Remaining args not for this script.
+    -C)     shift; rm -rf "$builddir";;
+    -t)     shift; target="--target $1"; shift;;    # BUG: no spaces in target
+    *)      break;;
+esac; done
+#   We do not currently handle extra args because we've not decided
+#   to which tool (cmake or native build tool) to pass them.
+[[ -n $1 ]] && die 2 "ERROR: Additional tool arguments not yet allowed:" "$@"
+
+mkdir -p "$builddir"
+cd "$builddir"
+{
+    cmake .. \
+    && cmake --build . $target \
+    && ctest -Q
+}   || die $? "\nFAILED"
