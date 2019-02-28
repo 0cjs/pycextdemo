@@ -5,3 +5,4 @@ enable_testing()
 add_test(TestNothing true)
 
 add_subdirectory(hello)
+add_subdirectory(hello-pyext)
