@@ -52,5 +52,5 @@ check_install_cmake || die 3 "ERROR: Can't find/install cmake."
 {
     cmake .. \
     && cmake --build . $target -- \
-    && ctest ${quiet:+-Q}
+    && ctest --output-on-failure ${quiet:+-Q}
 }   || die $? "\nFAILED"
