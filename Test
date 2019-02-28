@@ -6,6 +6,33 @@ builddir=$basedir/.build
 
 die() { local exitcode=$1; shift; echo -e 1>&2 "$@"; exit $exitcode; }
 
+check_install_cmake() {
+    local minorver
+    type cmake >/dev/null 2>&1 \
+        && minorver=$(cmake -P "$basedir/cmake/version_check.cmake")
+    minorver="${minorver#-- }"   # Remove leading crud
+    [[ -n $minorver && $minorver -ge 12 ]] && return 1
+    [[ $(uname -s) = Linux && $(uname -p) = x86_64 ]] || die 3 \
+        "No/old cmake and not on Linux x86_64; install cmake >= 3.12."
+
+    local cmver=3.12.4
+    local cmtar="cmake-$cmver-Linux-x86_64.tar.gz"
+    local cmurl="https://github.com/Kitware/CMake/releases/download/v$cmver/$cmtar"
+    local cachedir="$basedir/.dlcache"
+
+    mkdir -p "$cachedir"
+    [[ -s $cachedir/$cmtar ]] || {
+        echo "== Downloading $cmtar"
+        curl -L -o "$cachedir/$cmtar" "$cmurl"
+    }
+    local cmdest="$builddir/cmake-$cmver-Linux-x86_64"
+    [[ -d $cmdest && -x $cmdest/bin/cmake ]] || {
+        echo "== Installing $cmtar"
+        tar -C "$builddir" -xf "$cachedir/$cmtar"
+    }
+    PATH="$cmdest/bin:$PATH"
+}
+
 target=''
 quiet=1
 while true; do case "$1" in
@@ -21,6 +48,7 @@ esac; done
 
 mkdir -p "$builddir"
 cd "$builddir"
+check_install_cmake || die 3 "ERROR: Can't find/install cmake."
 {
     cmake .. \
     && cmake --build . $target -- \

@@ -1,0 +1,5 @@
+if(${CMAKE_MAJOR_VERSION} LESS 3)
+    message(FATAL_ERROR "Need cmake >= 3.xx")
+else()
+    message(STATUS ${CMAKE_MINOR_VERSION})
+endif()
