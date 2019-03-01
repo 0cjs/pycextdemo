@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(pycextdemo)
+project(demo)
 
 enable_testing()
 add_test(TestNothing true)
-
-add_subdirectory(hello)
-add_subdirectory(hello-pyext)
