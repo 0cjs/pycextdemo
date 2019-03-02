@@ -12,7 +12,7 @@ check_install_cmake() {
         && minorver=$(cmake -P "$basedir/cmake/version_check.cmake")
     minorver="${minorver#-- }"   # Remove leading crud
     [[ -n $minorver && $minorver -ge 12 ]] && return 1
-    [[ $(uname -s) = Linux && $(uname -p) = x86_64 ]] || die 3 \
+    [[ $(uname -s) = Linux && $(uname -m) = x86_64 ]] || die 3 \
         "No/old cmake and not on Linux x86_64; install cmake >= 3.12."
 
     local cmver=3.12.4
