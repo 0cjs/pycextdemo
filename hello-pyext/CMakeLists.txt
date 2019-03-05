@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
 project(hello-pyext)
 
-include(FindPython3)
 find_package(Python3 COMPONENTS Interpreter Development)
 message(STATUS "Python interpreter: ${Python3_EXECUTABLE}")
-if(NOT ${Python3_Development_FOUND})
-    #   XXX do we need this since we have `Development` above?
+if(NOT Python3_Development_FOUND)
+    #   find_package() will not abort the build if anything's missing.
     message(FATAL_ERROR "Python3 development libs not found.")
 endif()
 
