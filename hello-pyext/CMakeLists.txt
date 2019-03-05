@@ -11,7 +11,7 @@ endif()
 ####################################################################
 #   Extension module
 
-add_library(phello SHARED helloext.cpp)
+add_library(phello SHARED helloext)
 set_target_properties(phello PROPERTIES PREFIX "")  # Unix: no 'lib' prefix
 target_include_directories(phello PRIVATE ${Python3_INCLUDE_DIRS})
 
