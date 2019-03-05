@@ -7,6 +7,6 @@ add_executable(greet greetmain)
 target_link_libraries(greet hello)
 
 enable_testing()
-add_test(testgreet greet George)
+add_test(NAME testgreet COMMAND greet George)
 set_tests_properties(testgreet PROPERTIES
     PASS_REGULAR_EXPRESSION "^Hello, George\\.\n$") # Double escape for `.`

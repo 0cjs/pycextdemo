@@ -20,11 +20,12 @@ target_include_directories(phello PRIVATE ${Python3_INCLUDE_DIRS})
 
 enable_testing()
 
-add_test(pythonversion ${Python3_EXECUTABLE} --version)
+add_test(NAME pythonversion COMMAND ${Python3_EXECUTABLE} --version)
 set_tests_properties(pythonversion PROPERTIES
     PASS_REGULAR_EXPRESSION "^Python 3\.[4-7]")
 
 configure_file(test.py test.py)     # Copy to binary dir so .so is in path
-add_test(pythonext ${Python3_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/test.py)
+add_test(NAME pythonext
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/test.py)
 set_tests_properties(pythonext PROPERTIES
     PASS_REGULAR_EXPRESSION "^OK\n$")
