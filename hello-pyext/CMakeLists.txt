@@ -3,9 +3,14 @@ project(hello-pyext)
 
 find_package(Python3 COMPONENTS Interpreter Development)
 message(STATUS "Python interpreter: ${Python3_EXECUTABLE}")
-if(NOT Python3_Development_FOUND)
+if(NOT Python3_FOUND AND Python3_Development_FOUND)
     #   find_package() will not abort the build if anything's missing.
-    message(FATAL_ERROR "Python3 development libs not found.")
+    string(JOIN "\n" errmsg
+        "  Python3 and/or development libs not found."
+        "  - Python3_FOUND=${Python3_FOUND}"
+        "  - Python3_Development_FOUND=${Python3_Development_FOUND}"
+        )
+    message(FATAL_ERROR ${errmsg})
 endif()
 
 ####################################################################
