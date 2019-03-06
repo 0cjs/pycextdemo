@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.12)
 project(hello-pyext)
 
 find_package(Python3 COMPONENTS Interpreter Development)
-message(STATUS "Python interpreter: ${Python3_EXECUTABLE}")
+message(STATUS
+    "Python: version=${Python3_VERSION} interpreter=${Python3_EXECUTABLE}")
 if(NOT Python3_FOUND AND Python3_Development_FOUND)
     #   find_package() will not abort the build if anything's missing.
     string(JOIN "\n" errmsg
