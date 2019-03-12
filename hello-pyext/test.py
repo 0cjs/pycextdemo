@@ -12,6 +12,7 @@ def assert_equal(expected, actual, message):
 
 def runtests():
     assert_equal(7, phello.seven(), 'seven()')
+    assert_equal('Hello, Joe.', phello.greet('Joe'), 'greet(Joe)')
 
 if __name__ == '__main__':
     runtests()

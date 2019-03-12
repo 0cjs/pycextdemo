@@ -1,4 +1,5 @@
 #include <Python.h>
+#include "greet.h"
 
 // Based on examples from Python extension documentation:
 // https://docs.python.org/3/extending/extending.html#a-simple-example
@@ -21,8 +22,18 @@ static PyObject * seven(PyObject *self, PyObject *args)  {
     return PyLong_FromLong(value);
 }
 
+//  This assumes that all `char *` are UTF-8 strings.
+static PyObject * pygreet(PyObject *self, PyObject *args)  {
+    //  XXX How do we decode the args?
+    const char *name = NULL;
+    if (!PyArg_ParseTuple(args, "s", &name))
+        return NULL;
+    return PyUnicode_FromString(greet(name));
+}
+
 static PyMethodDef methods[] = {
     {"seven", seven, METH_VARARGS, "Return integer 7"},
+    {"greet", pygreet, METH_VARARGS, "Greet the passed name"},
     {NULL, NULL, 0, NULL}
 };
 

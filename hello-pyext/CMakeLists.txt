@@ -42,6 +42,7 @@ endif()
 
 add_library(phello SHARED helloext)
 set_target_properties(phello PROPERTIES PREFIX "")  # Unix: no 'lib' prefix
+target_link_libraries(phello hello)
 target_include_directories(phello PRIVATE ${Python3_INCLUDE_DIRS})
 
 ####################################################################
