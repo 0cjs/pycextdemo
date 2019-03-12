@@ -56,5 +56,3 @@ set_tests_properties(pythonversion PROPERTIES
 configure_file(test.py test.py)     # Copy to binary dir so .so is in path
 add_test(NAME pythonext
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/test.py)
-set_tests_properties(pythonext PROPERTIES
-    PASS_REGULAR_EXPRESSION "^OK\n$")
