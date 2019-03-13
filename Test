@@ -14,6 +14,7 @@ winvsconfig() {
     local vscmakebin="$vsinstalldir/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin"
     [ -d "$vscmakebin" ] || return 0
     PATH="$vscmakebin:$PATH"
+    declare -g platform; platform=x64
 }
 
 check_install_cmake() {
@@ -44,6 +45,7 @@ check_install_cmake() {
 }
 
 target=''
+platform=''     # Used for Windows
 quiet=1
 while true; do case "$1" in
     --)     shift; break;;              # Remaining args not for this script.
@@ -61,7 +63,7 @@ cd "$builddir"
 winvsconfig
 check_install_cmake || die 3 "ERROR: Can't find/install cmake."
 {
-    cmake .. \
+    cmake ${platform:+-A "$platform"} .. \
     && cmake --build . $target -- \
     && ctest --output-on-failure ${quiet:+-Q}
 }   || die $? "\nFAILED"
