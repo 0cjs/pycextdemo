@@ -65,7 +65,9 @@ cd "$builddir"
 winvsconfig
 check_install_cmake || die 3 "ERROR: Can't find/install cmake."
 {
-    cmake ${generator:+-G "$generator"} ${platform:+-A "$platform"} .. \
+    cmake -Wdev -Wdeprecated \
+        ${generator:+-G "$generator"} ${platform:+-A "$platform"} \
+        .. \
     && cmake --build . $target -- \
     && ctest --output-on-failure ${quiet:+-Q}
 }   || die $? "\nFAILED"
