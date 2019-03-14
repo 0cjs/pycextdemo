@@ -16,8 +16,14 @@ winvsconfig() {
     local vsninjabin="$vstools/Ninja"
     [ -d "$vscmakebin" ] || return 0
     PATH="$vscmakebin:$vsninjabin:$PATH"
-    declare -g generator platform
-    [[ $generator != Ninja ]] && platform=x64
+    declare -g generator platform config
+    if [[ $generator != Ninja ]]; then
+        platform=x64
+        #   We do this because the default "Debug" debug config
+        #   wants to link to python36_d.lib, which doesn't seem to be
+        #   supplied with a standard Python install.
+        config=RelWithDebInfo
+    fi
     return 0
 }
 
@@ -51,6 +57,7 @@ check_install_cmake() {
 target=''
 generator=''
 platform=''     # Used for Windows
+config=''
 quiet=1
 while true; do case "$1" in
     --)     shift; break;;              # Remaining args not for this script.
@@ -72,6 +79,6 @@ check_install_cmake || die 3 "ERROR: Can't find/install cmake."
     cmake -Wdev -Wdeprecated \
         ${generator:+-G "$generator"} ${platform:+-A "$platform"} \
         .. \
-    && cmake --build . $target -- \
+    && cmake --build . ${config:+--config "$config"} $target -- \
     && ctest --output-on-failure ${quiet:+-Q}
 }   || die $? "\nFAILED"

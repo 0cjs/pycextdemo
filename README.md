@@ -45,8 +45,7 @@ by this repo.
 
 An MSBuild generator will be used unless `-n` is given to use Ninja.
 Since MSBuild is multi-configuration, you may want/need to change the
-script to use `cmake --build . --config Release ...` or similar to
-make sure you're building the target you want.
+script to build a with a different `--config`.
 
 ### Visual Studio
 
