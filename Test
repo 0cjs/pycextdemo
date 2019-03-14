@@ -11,10 +11,14 @@ winvsconfig() {
     local vsprogramfiles="/c/Program Files (x86)/Microsoft Visual Studio/"
     local vsinstalldir="$vsprogramfiles/2017/Professional"
     [[ -d $vsinstalldir ]] || vsinstalldir="$vsprogramfiles/2017/Community"
-    local vscmakebin="$vsinstalldir/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin"
+    local vstools="$vsinstalldir/Common7/IDE/CommonExtensions/Microsoft/CMake/"
+    local vscmakebin="$vstools/CMake/bin"
+    local vsninjabin="$vstools/Ninja"
     [ -d "$vscmakebin" ] || return 0
-    PATH="$vscmakebin:$PATH"
-    declare -g platform; platform=x64
+    PATH="$vscmakebin:$vsninjabin:$PATH"
+    declare -g generator platform
+    [[ $generator != Ninja ]] && platform=x64
+    return 0
 }
 
 check_install_cmake() {
