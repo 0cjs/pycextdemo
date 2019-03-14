@@ -80,5 +80,5 @@ check_install_cmake || die 3 "ERROR: Can't find/install cmake."
         ${generator:+-G "$generator"} ${platform:+-A "$platform"} \
         .. \
     && cmake --build . ${config:+--config "$config"} $target -- \
-    && ctest --output-on-failure ${quiet:+-Q}
+    && ctest --output-on-failure ${quiet:+-Q} ${config:+-C "$config"}
 }   || die $? "\nFAILED"
