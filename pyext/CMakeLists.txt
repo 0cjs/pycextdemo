@@ -36,4 +36,4 @@ set_tests_properties(pythonversion PROPERTIES
 add_test(NAME pythonext
     COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test.py)
 set_tests_properties(pythonext PROPERTIES
-    ENVIRONMENT "PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}")
+    ENVIRONMENT "PYTHONPATH=$<TARGET_FILE_DIR:phello>")
