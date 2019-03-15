@@ -3,7 +3,7 @@
 #   Adapted from: https://stackoverflow.com/a/34292622/107294
 #
 #   Calling
-#       include(${CMAKE_SOURCE_DIR}/cmake/printproplist.cmake)
+#       include(${CMAKE_SOURCE_DIR}/libcmake/printproplist.cmake)
 #   will enable the print_properties() and print_target_properties(tgt)
 #   functions.
 #

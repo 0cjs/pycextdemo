@@ -30,7 +30,7 @@ winvsconfig() {
 check_install_cmake() {
     local minorver
     type cmake >/dev/null 2>&1 \
-        && minorver=$(cmake -P "$basedir/cmake/version_check.cmake")
+        && minorver=$(cmake -P "$basedir/libcmake/version_check.cmake")
     minorver="${minorver#-- }"   # Remove leading crud
     [[ -n $minorver && $minorver -ge 12 ]] && return 0
     [[ $(uname -s) = Linux && $(uname -m) = x86_64 ]] || die 3 \
