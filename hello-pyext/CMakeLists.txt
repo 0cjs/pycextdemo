@@ -33,6 +33,7 @@ add_test(NAME pythonversion COMMAND ${Python3_EXECUTABLE} --version)
 set_tests_properties(pythonversion PROPERTIES
     PASS_REGULAR_EXPRESSION "^Python 3\.[4-7]")
 
-configure_file(test.py test.py)     # Copy to binary dir so .so is in path
 add_test(NAME pythonext
-    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/test.py)
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test.py)
+set_tests_properties(pythonext PROPERTIES
+    ENVIRONMENT "PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}")
