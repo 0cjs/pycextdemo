@@ -16,6 +16,8 @@ winvsconfig() {
     local vsninjabin="$vstools/Ninja"
     [ -d "$vscmakebin" ] || return 0
     PATH="$vscmakebin:$vsninjabin:$PATH"
+    #   Or if you instead want to use your own downloaded version:
+    #PATH="~/portable/cmake-3.14.0-win64-x64/bin:$PATH"
     declare -g generator platform config
     if [[ $generator != Ninja ]]; then
         platform=x64
